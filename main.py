@@ -2,14 +2,12 @@ import pandas as pd
 from process_cfr import process_cfr
 from process_mrlview import process_mrlview
 from process_tip11 import process_tip
-import openpyxl as OP
-import timeit
 import os
 files = os.listdir()
 
 def finishdoc(tempmrl):
-    tempmrl.to_excel('Newdf.xlsx', index=False)
     tempmrl = tempmrl.sort_values(by = 'Work Item')
+    tempmrl.to_excel('Newdf.xlsx', index=False)
     return tempmrl
 
 
@@ -27,7 +25,6 @@ def ask1(operation):
     if operation == 3:
         tip = int(input('Which integer represents the tip file?'))
         mrldf = process_tip(tippath=files[tip], mrldf=mrldf)
-    
     return mrldf
 
 
@@ -51,7 +48,7 @@ def ask2(operation):
         tip = int(input('Which integer represents the tip file?'))
         mrldf = process_tip(tippath=files[tip], mrldf=mrldf)
         mrldf = process_mrlview(mrlviewpath=files[mrlview], mrldf=mrldf)
-        
+
     return mrldf
 
 
@@ -92,6 +89,3 @@ if __name__ == '__main__':
     finishdoc(tempmrl)
 
     print("----------Success!----------")
-    
-
-# mrldf.to_excel("Newdf.xlsx", index=False)
