@@ -1,0 +1,97 @@
+import pandas as pd
+from process_cfr import process_cfr
+from process_mrlview import process_mrlview
+from process_tip11 import process_tip
+import openpyxl as OP
+import timeit
+import os
+files = os.listdir()
+
+def finishdoc(tempmrl):
+    tempmrl.to_excel('Newdf.xlsx', index=False)
+    tempmrl = tempmrl.sort_values(by = 'Work Item')
+    return tempmrl
+
+
+def ask1(operation):
+    for i, k in enumerate(files):
+        print("[{}] {}".format(i, k))
+    mrl = int(input('Which integer represents the mrl file?'))
+    mrldf = pd.read_excel(files[mrl])
+    if operation == 1:
+        cfr = int(input('Which integer represents the cfr file?'))
+        mrldf = process_cfr(cfrpath=files[cfr], mrldf=mrldf)
+    if operation == 2:
+        mrlview = int(input('Which integer represents the mrlview file?'))
+        mrldf = process_mrlview(mrlviewpath=files[mrlview], mrldf=mrldf)
+    if operation == 3:
+        tip = int(input('Which integer represents the tip file?'))
+        mrldf = process_tip(tippath=files[tip], mrldf=mrldf)
+    
+    return mrldf
+
+
+def ask2(operation):
+    for i, k in enumerate(files):
+        print("[{}] {}".format(i, k))
+    mrl = int(input('Which integer represents the mrl file?'))
+    mrldf = pd.read_excel(files[mrl])
+    if operation == 4:
+        cfr = int(input('Which integer represents the cfr file?'))
+        mrlview = int(input('Which integer represents the mrlview file?'))
+        mrldf = process_mrlview(mrlviewpath=files[mrlview], mrldf=mrldf)
+        mrldf = process_cfr(cfrpath=files[cfr], mrldf=mrldf)
+    elif operation == 5:
+        cfr = int(input('Which integer represents the cfr file?'))
+        tip = int(input('Which integer represents the tip file?'))
+        mrldf = process_tip(tippath=files[tip], mrldf=mrldf)
+        mrldf = process_cfr(cfrpath=files[cfr], mrldf=mrldf)
+    elif operation == 6:
+        mrlview = int(input('Which integer represents the mrlview file?'))
+        tip = int(input('Which integer represents the tip file?'))
+        mrldf = process_tip(tippath=files[tip], mrldf=mrldf)
+        mrldf = process_mrlview(mrlviewpath=files[mrlview], mrldf=mrldf)
+        
+    return mrldf
+
+
+
+def ask3():
+    for i, k in enumerate(files):
+        print("[{}] {}".format(i, k))
+    mrl = int(input('Which integer represents the mrl file? '))
+    cfr = int(input('Which integer represents the cfr file? '))
+    mrlview = int(input('Which integer represents the mrlview file? '))
+    tip = int(input('Which integer represents the tip file? '))
+    mrldf = pd.read_excel(files[mrl])
+    mrldf = process_tip(tippath=files[tip], mrldf=mrldf)
+    mrldf = process_mrlview(mrlviewpath=files[mrlview], mrldf=mrldf)
+    mrldf = process_cfr(cfrpath=files[cfr], mrldf=mrldf)
+    return mrldf
+
+
+if __name__ == '__main__':
+    print("Which files would you like to be processed (into mrl)? ")
+    print("[1] cfr file only")
+    print("[2] mrlview file only")
+    print("[3] tip file only")
+    print("[4] 1 and 2")
+    print("[5] 1 and 3")
+    print("[6] 2 and 3")
+    print("[7] All")
+    operation = int(input("Which operation would you like to pick (type an integer): "))
+    if operation == 1 or operation == 2 or operation == 3:
+        tempmrl = ask1(operation)
+    elif operation == 4 or operation == 5 or operation == 6:
+        tempmrl = ask2(operation)
+    elif (operation == 7):
+        tempmrl = ask3()
+    else:
+        print("Invalid input")
+        quit()
+    finishdoc(tempmrl)
+
+    print("----------Success!----------")
+    
+
+# mrldf.to_excel("Newdf.xlsx", index=False)
