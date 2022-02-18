@@ -6,10 +6,35 @@ import os
 files = os.listdir()
 
 def finishdoc(tempmrl):
-    tempmrl = tempmrl.sort_values(by = 'Work Item')
+    print("Styling excel sheet.")
+    tempmrl = tempmrl.style.apply(highlight_tip, axis=1)
+    print("Writing to new excel file.")
     tempmrl.to_excel('Newdf.xlsx', index=False)
     return tempmrl
 
+def highlight_tip(s):
+    if s.loc['MATCH'] == 'TIP':
+        return ['color: #C00000'] * len(s)
+    if s.loc['MATCH'] == 'IMS':
+        return ['color: #ee7600'] * len(s)
+    if s.loc['MATCH'] == 'KEMS':
+        return ['color: #000000; font-weight: bold;'] * len(s)
+    if s.loc['MATCH'] == 'APPROVED':
+        return ['font-weight: bold; color: #000000;'] * len(s)
+    if s.loc['MATCH'] == 'PS':
+        return ['color: #191919;'] * len(s)
+    if s.loc['MATCH'] == 'P; font-weight: bold;':
+        return ['color: #191919;'] * len(s)
+    if s.loc['MATCH'] == 'WAF':
+        return ['color: #964B00;'] * len(s)
+    if s.loc['MATCH'] == 'TIP-NIS':
+        return ['color: #8B0000;'] * len(s)
+    if s.loc['MATCH'] == 'RR':
+        return ['color: #800080;'] * len(s)
+    if s.loc['MATCH'] == 'NIS':
+        return ['color: #000000; font-weight: bold;'] * len(s)
+    else:
+        return ['color: black;'] * len(s)
 
 def ask1(operation):
     for i, k in enumerate(files):

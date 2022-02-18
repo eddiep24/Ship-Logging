@@ -33,9 +33,15 @@ def process_mrlview(mrlviewpath, mrldf):
                             int(specsplit[1])
                             pval = 'P'
                         except:
-                            pval = 'PS'
+                            if specsplit[1][-2:] == 'KE' or specsplit[1][-2:] == 'IM':
+                                pval = None
+                            else:
+                                pval = 'PS'
             else:
-                pval = 'PS'
+                if int(specsplit[0]) == 1:
+                    pval = None
+                else:
+                    pval = 'PS'
         except Exception:
             pval = 'PS'
 

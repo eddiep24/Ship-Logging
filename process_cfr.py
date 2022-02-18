@@ -1,5 +1,5 @@
 import pandas as pd
-def process_cfr(cfrpath, mrlpath):
+def process_cfr(cfrpath, mrldf):
     print("Opening cfr file")
     cfrdf = pd.read_excel(cfrpath, parse_dates=False)
     print("Opening mrl file")
