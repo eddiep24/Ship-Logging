@@ -26,6 +26,7 @@ def process_mrlview(mrlviewpath, mrldf):
         mrlviewdf.loc[n, 'Activity ID'] = str(mrlviewdf.loc[n, 'Activity ID'])
         try:
             specsplit = mrlviewdf.loc[n, 'Activity ID'].split('.')
+            int(mrlviewdf.loc[n, 'Work Item'].split('.')[0])
             if len(specsplit) == 2:
                 for j in range(10):
                     if mrlviewdf.loc[n, 'SPEC'].startswith(str(j)):
@@ -80,5 +81,3 @@ def process_mrlview(mrlviewpath, mrldf):
     print("Writing data to new file.")
     print(temphold)
     return mrldf
-
-
