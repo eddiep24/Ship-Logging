@@ -24,7 +24,7 @@ def process_tip(tippath, mrldf):
         for j in mrltiplocations:
             if mrltiplocations[j] == val:
                 # Operation that prevents nans for being printed
-                if str(tipdf.loc[n + 1, '* Work Spec No']) == 'nan':
+                if str(tipdf.loc[n + 1, '* Work Spec No']) == 'nan' or str(tipdf.loc[n + 1, '* Work Spec No']) == 'NaN' or tipdf.loc[n + 1, '* Work Spec No'] == None:
                     wsval = None
                 else:
                     wsval = str(tipdf.loc[n + 1, '* Work Spec No']) + '.2'
