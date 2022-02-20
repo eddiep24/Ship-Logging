@@ -1,8 +1,9 @@
+import os
 import pandas as pd
 from process_cfr import process_cfr
 from process_mrlview import process_mrlview
 from process_tip11 import process_tip
-import os
+
 files = os.listdir()
 
 def finishdoc(tempmrl):

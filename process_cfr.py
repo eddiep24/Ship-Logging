@@ -1,9 +1,9 @@
 import pandas as pd
+
 def process_cfr(cfrpath, mrldf):
     print("Opening cfr file")
     cfrdf = pd.read_excel(cfrpath, parse_dates=False)
     print("Opening mrl file")
-    # mrldf = pd.read_excel(mrlpath, parse_dates=False)
     # Only reliable row counter is the length of the spreadsheet
     # Take range of length so I can index row later
     mrllength = len(mrldf.index)
@@ -65,6 +65,3 @@ def process_cfr(cfrpath, mrldf):
         print(n, "out of", len(cfrdf.index), "complete.")
 
     return mrldf
-
-# if __name__ == '__main__':
-#     process_cfr(cfrpath='1742-cfr-query-11-feb-22.xlsx', mrlpath='1742-mrl-010321.xlsx').to_excel('Newdf.xlsx')

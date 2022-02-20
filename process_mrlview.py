@@ -4,9 +4,7 @@ def process_mrlview(mrlviewpath, mrldf):
     print("Opening mrlview file.")
     mrlviewdf = pd.read_excel(mrlviewpath)
     print("Opening mrl file.")
-    # mrldf = pd.read_excel(mrlpath)
     n = 0
-    pcount = 0
     matches = 0
     PSPindexes = []
 
@@ -22,7 +20,6 @@ def process_mrlview(mrlviewpath, mrldf):
     mrldf = mrldf.drop(mrldf.index[PSPindexes])
     print(len(mrldf.index))
     for n in range(len(mrlviewdf.index)):
-        # if mrlviewdf.loc[n, 'Match'] == 'PS' or mrlviewdf.loc[n, 'Match'] == 'P':
         mrlviewdf.loc[n, 'Activity ID'] = str(mrlviewdf.loc[n, 'Activity ID'])
         try:
             specsplit = mrlviewdf.loc[n, 'Activity ID'].split('.')
@@ -47,8 +44,14 @@ def process_mrlview(mrlviewpath, mrldf):
                     pval = 'PS'
                     wival = str(mrlviewdf.loc[n, 'SPEC']) + ".3"
         except Exception:
-            pval = 'PS'
-            wival = mrlviewdf.loc[n, 'SPEC']
+            try:
+                if int(specsplit[0]) == 1 and (len(specsplit) == 1):
+                    continue
+                if specsplit[1][-2:] == 'KE' or specsplit[1][-2:] == 'IM':
+                    continue
+            except:
+                pval = 'PS'
+                wival = mrlviewdf.loc[n, 'SPEC']
         try:
             mrldf = mrldf.append({
                     'MATCH' : pval,
