@@ -25,7 +25,7 @@ def process_cfr(cfrpath, mrldf):
                 # Replace each value with given 'tip11' value
                 mrldf.loc[j, 'CFR #'] = cfrdf.loc[n, 'Serial'], # MRL COL V
                 mrldf.loc[j, 'Sub \nCFR #'] = cfrdf.loc[n, 'TradeSerial'], # MRL COL W
-                mrldf.loc[j, 'Work Item'] = cfrdf.loc[n, 'ItemNo'], # MRL COL C
+                mrldf.loc[j, 'Work Item'] = str(cfrdf.loc[n, 'ItemNo']) + ".4", # MRL COL C
                 mrldf.loc[j, 'TITLE'] = cfrdf.loc[n, 'RptType'], # MRL COL D
                 mrldf.loc[j, 'Component'] = cfrdf.loc[n, 'RptDescription'], # MRL COL AV
                 mrldf.loc[j, 'Spec'] = cfrdf.loc[n, 'Para'], # MRL COL AX
