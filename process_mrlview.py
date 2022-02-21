@@ -21,37 +21,36 @@ def process_mrlview(mrlviewpath, mrldf):
     print(len(mrldf.index))
     for n in range(len(mrlviewdf.index)):
         mrlviewdf.loc[n, 'Activity ID'] = str(mrlviewdf.loc[n, 'Activity ID'])
+
         try:
+            # If specsplit is 2 and spec is not a letter then P
+            # If val is PS then wival + .3
             specsplit = mrlviewdf.loc[n, 'Activity ID'].split('.')
-            int(mrlviewdf.loc[n, 'Work Item'].split('.')[0])
+            int(mrlviewdf.loc[n, 'SPEC'].split('-')[0])
+            # print(specsplit, "MADE IT THROUGH")
+            # These are all numbers
+
+            # Gets rid of the KE or IM possibility and 1 case
+            if int(specsplit[0]) == 1 and len(specsplit) == 1:
+                continue
             if len(specsplit) == 2:
-                for j in range(10):
-                    if mrlviewdf.loc[n, 'SPEC'].startswith(str(j)):
-                        try:
-                            int(specsplit[1])
-                            pval = 'P'
-                            wival = mrlviewdf.loc[n, 'SPEC']
-                        except:
-                            if specsplit[1][-2:] == 'KE' or specsplit[1][-2:] == 'IM':
-                                continue
-                            else:
-                                pval = 'PS'
-                                wival = str(mrlviewdf.loc[n, 'SPEC']) + ".3"
+                # print(specsplit, "TWO LONG MADE IT THROUGH IF")
+                pval = 'P'
+                wival = str(mrlviewdf.loc[n, 'SPEC'])
+            # If the work item starts with an integer
+            # These are more than two numbers
             else:
-                if int(specsplit[0]) == 1 and (len(specsplit) == 1):
-                    continue
-                else:
-                    pval = 'PS'
-                    wival = str(mrlviewdf.loc[n, 'SPEC']) + ".3"
+                pval = 'PS'
+                wival = str(mrlviewdf.loc[n, 'SPEC']) + ".3"
+        # These are all words
         except Exception:
-            try:
-                if int(specsplit[0]) == 1 and (len(specsplit) == 1):
-                    continue
+            if len(specsplit) == 2:
                 if specsplit[1][-2:] == 'KE' or specsplit[1][-2:] == 'IM':
                     continue
-            except:
-                pval = 'PS'
-                wival = mrlviewdf.loc[n, 'SPEC']
+            if int(specsplit[0]) == 1 and len(specsplit) == 1:
+                continue
+            pval = 'PS'
+            wival = mrlviewdf.loc[n, 'SPEC']
         try:
             mrldf = mrldf.append({
                     'MATCH' : pval,
