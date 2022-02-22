@@ -19,6 +19,7 @@ def process_mrlview(mrlviewpath, mrldf):
     print(matches)
     mrldf = mrldf.drop(mrldf.index[PSPindexes])
     print(len(mrldf.index))
+
     for n in range(len(mrlviewdf.index)):
         mrlviewdf.loc[n, 'Activity ID'] = str(mrlviewdf.loc[n, 'Activity ID'])
 

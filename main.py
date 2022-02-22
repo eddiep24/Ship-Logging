@@ -8,17 +8,17 @@ files = os.listdir()
 
 def finishdoc(tempmrl):
     print("Styling excel sheet.")
-
-    tempmrl['Answered Date'].dt.strftime('%d-%b-%Y')
-    tempmrl['Early/\nActual\nStart'].dt.strftime('%d-%b-%Y')
-    tempmrl['Early/\nActual\nStop'].dt.strftime('%d-%b-%Y')
-    tempmrl['Late Start'].dt.strftime('%d-%b-%Y')
-    tempmrl['Late Stop'].dt.strftime('%d-%b-%Y')
-    tempmrl['Accepted'].dt.strftime('%d-%b-%Y')
-    tempmrl['Rejected'].dt.strftime('%d-%b-%Y')
-    tempmrl['Issued/Date Entered'].dt.strftime('%d-%b-%Y')
-    tempmrl['Submitted Date'].dt.strftime('%d-%b-%Y')
-    tempmrl['Answered Date'].dt.strftime('%d-%b-%Y')
+    tempmrl = trimdate(tempmrl, 'Answered Date')
+    tempmrl = trimdate(tempmrl, 'Early/\nActual\nStart')
+    tempmrl = trimdate(tempmrl, 'Early/\nActual\nStop')
+    tempmrl = trimdate(tempmrl, 'Late Start')
+    tempmrl = trimdate(tempmrl, 'Late Stop')
+    tempmrl = trimdate(tempmrl, 'Submitted Date')
+    tempmrl = trimdate(tempmrl, 'Issued/Date Entered')
+    tempmrl = trimdate(tempmrl, 'Rejected')
+    tempmrl = trimdate(tempmrl, 'Answered Date')
+    tempmrl = trimdate(tempmrl, 'Accepted')
+    
 
     tempmrl = tempmrl.style.apply(highlight_tip, axis=1)
     print("Writing to new excel file.")
@@ -93,6 +93,23 @@ def ask3():
     mrldf = process_cfr(cfrpath=files[cfr], mrldf=mrldf)
     return mrldf
 
+def trimdate(tempmrl, colname):
+    tempmrl[colname] = tempmrl[colname].map(str)
+    look_up = {'01': 'Jan', '02': 'Feb', '03': 'Mar', '04': 'Apr', '05': 'May',
+        '06': 'Jun', '07': 'Jul', '08': 'Aug', '09': 'Sep', '10': 'Oct', '11': 'Nov', '12': 'Dec'}
+    for num, val in enumerate(tempmrl[colname]):
+        try:
+            # If the first character isnt a digit the value won't be written
+            cell = str(val)
+            int(cell[0])
+            date = cell.split(' ')[0]
+            temparray = date.split('-') #YEAR, MONTH, DAY
+            newval = str(temparray[2]) + "-" + look_up[str(temparray[1])] + "-" + temparray[0][-2:]
+            tempmrl.loc[num, colname] = newval
+        except:
+            tempmrl.loc[num, colname] = None
+            continue
+    return tempmrl
 
 if __name__ == '__main__':
     print("Which files would you like to be processed (into mrl)? ")

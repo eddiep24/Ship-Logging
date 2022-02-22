@@ -11,13 +11,11 @@ def process_tip(tippath, mrldf):
 
     mrltiplocations = {}
 
-
     # mrltiplocations is a dictionary with keys as indexes and values as corresponding QA/WAF # values
     print("Finding TIP matches")
     for i in range(mrllength):
         if mrldf.loc[i, 'MATCH'] == "TIP":
             mrltiplocations[i] = mrldf.loc[i, 'QA/WAF #']
-
     
     for n, val in enumerate(tipdf['* BAE Insp ID']):
         if str(val) == "Nan" or val == None or str(val) == "nan":

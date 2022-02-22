@@ -16,7 +16,6 @@ def process_cfr(cfrpath, mrldf):
         if mrldf.loc[i, 'MATCH'] == "IMS":
             mrltiplocations[i] = mrldf.loc[i, 'CFR #']
 
-
     for n, val in enumerate(cfrdf['Serial']):
         match = False
         for j in mrltiplocations:
