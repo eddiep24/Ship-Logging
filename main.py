@@ -8,6 +8,18 @@ files = os.listdir()
 
 def finishdoc(tempmrl):
     print("Styling excel sheet.")
+
+    tempmrl['Answered Date'].dt.strftime('%d-%b-%Y')
+    tempmrl['Early/\nActual\nStart'].dt.strftime('%d-%b-%Y')
+    tempmrl['Early/\nActual\nStop'].dt.strftime('%d-%b-%Y')
+    tempmrl['Late Start'].dt.strftime('%d-%b-%Y')
+    tempmrl['Late Stop'].dt.strftime('%d-%b-%Y')
+    tempmrl['Accepted'].dt.strftime('%d-%b-%Y')
+    tempmrl['Rejected'].dt.strftime('%d-%b-%Y')
+    tempmrl['Issued/Date Entered'].dt.strftime('%d-%b-%Y')
+    tempmrl['Submitted Date'].dt.strftime('%d-%b-%Y')
+    tempmrl['Answered Date'].dt.strftime('%d-%b-%Y')
+
     tempmrl = tempmrl.style.apply(highlight_tip, axis=1)
     print("Writing to new excel file.")
     tempmrl.to_excel('Newdf.xlsx', index=False)

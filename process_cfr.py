@@ -38,6 +38,7 @@ def process_cfr(cfrpath, mrldf):
                 mrldf.loc[j, 'Integrator Comments'] = cfrdf.loc[n, 'RptAction'], # MRL COL BF
                 mrldf.loc[j, 'T&I Comments'] = cfrdf.loc[n, 'Comment'], # MRL COL AW
                 mrldf.loc[j, 'Duration'] = cfrdf.loc[n, 'DaysOpen'], # MRL COL AG
+
         if match == False:
             # If there is no match then add the values to the end of the dataframe
             if str(cfrdf.loc[n, 'ItemNo']) == 'nan' or cfrdf.loc[n, 'ItemNo'] == None or cfrdf.loc[n, 'ItemNo'] == 0 or str(cfrdf.loc[n, 'ItemNo']) == 'NaN':
